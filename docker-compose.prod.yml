@@ -1,0 +1,13 @@
+version: "3"
+services:
+    products-service:
+        build:
+            context: ./products-service/
+            args:
+                NODE_ENV: production
+        environment: 
+            - PORT=3001
+            - NODE_ENV=development
+        ports:
+            - "3001:3001"
+        command: npm start

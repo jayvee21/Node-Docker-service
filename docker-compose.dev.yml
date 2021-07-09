@@ -1,0 +1,22 @@
+version: "3"
+services:
+    products-service:
+        build:
+            context: ./products-service/
+            args:
+                NODE_ENV: development
+        volumes:
+            - ./products-service/:/app
+            - /app/node_modules
+        environment:
+            - PORT=4000
+            - NODE_ENV=development
+            - MONGO_USER=myuser
+            - MONGO_PASSWORD=mypassword
+        command: npm run dev
+        depends_on: 
+            - mongo
+    mongo:
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: myuser
+            MONGO_INITDB_ROOT_PASSWORD: mypassword
