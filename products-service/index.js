@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT } = require('./config/config');
 const app = express()
 const port = process.env.PORT || 4000;
-const { productsRoute } = require('./routes/index');
+const { productsRoute, usersRoute } = require('./routes/index');
 
 app.use( express.json() )
 
@@ -27,6 +27,7 @@ connectWithRetry()
 
 // Products route
 app.use("/v1/products", productsRoute);
+app.use("/v1/users", usersRoute)
 
 // Initial route
 app.get('/', (req, res)=>{
