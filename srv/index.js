@@ -1,9 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT } = require('./config/config');
+const session = require('express-session');
+const redis = require('redis');
+let RedisStore = require('connect-redis')(session);
+const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT, REDIS_HOST, REDIS_PORT, SESSION_SECRET } = require('./config/config');
+
+let redisClient = redis.createClient({
+    host: REDIS_HOST,
+    port: REDIS_PORT
+})
+
+
 const app = express()
 const port = process.env.PORT || 4000;
-const { productsRoute } = require('./routes/index');
+const { productsRoute, usersRoute } = require('./routes/index');
+
 
 app.use( express.json() )
 
@@ -24,9 +35,22 @@ const connectWithRetry = () => {
 connectWithRetry()
 
 
+app.use(session({
+    store: new RedisStore({ client: redisClient}),
+    secret: SESSION_SECRET,
+    cookie: {
+        secure: false,
+        resave: false,
+        saveUninitialized: false,
+        httpOnly: true,
+        maxAge: 300000
+    }
+}))
+
 
 // Products route
 app.use("/v1/products", productsRoute);
+app.use("/v1/users", usersRoute)
 
 // Initial route
 app.get('/', (req, res)=>{
@@ -36,5 +60,5 @@ app.get('/', (req, res)=>{
 
 
 app.listen( port, () => {
-    console.log(`Products services api is running at port : ${port}`)
+    console.log(`API services api is running at port : ${port}`)
 });

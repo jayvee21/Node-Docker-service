@@ -1,18 +1,19 @@
 version: "3"
 services:
-    products-service:
+    srv:
         build:
-            context: ./products-service/
+            context: ./srv/
             args:
                 NODE_ENV: development
         volumes:
-            - ./products-service/:/app
+            - ./srv/:/app
             - /app/node_modules
         environment:
             - PORT=4000
             - NODE_ENV=development
             - MONGO_USER=myuser
             - MONGO_PASSWORD=mypassword
+            - SESSION_SECRET=secret
         command: npm run dev
         depends_on: 
             - mongo
