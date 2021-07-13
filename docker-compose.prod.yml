@@ -1,8 +1,8 @@
 version: "3"
 services:
-    products-service:
+    srv:
         build:
-            context: ./products-service/
+            context: ./srv/
             args:
                 NODE_ENV: production
         environment: 

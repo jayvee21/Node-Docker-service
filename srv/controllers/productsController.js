@@ -1,7 +1,7 @@
 /**
  * Models
  */
-const Product = require('./../models/productModel')
+const Product = require('../models/productModel')
 
 /**
  * Get all products

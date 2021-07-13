@@ -1,5 +1,5 @@
-./products-service/node_modules
-./products-service/Dockerfile
+./srv/node_modules
+./srv/Dockerfile
 .git
 .gitignore
 docker-compose*
