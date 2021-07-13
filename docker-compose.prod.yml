@@ -1,13 +1,13 @@
 version: "3"
 services:
+    nginx:
+        ports:
+            - "80:80"
     srv:
         build:
             context: ./srv/
             args:
                 NODE_ENV: production
         environment: 
-            - PORT=3001
-            - NODE_ENV=development
-        ports:
-            - "3001:3001"
+            - NODE_ENV=production
         command: npm start

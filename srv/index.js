@@ -34,6 +34,7 @@ const connectWithRetry = () => {
 
 connectWithRetry()
 
+app.enable("trust proxy");
 
 app.use(session({
     store: new RedisStore({ client: redisClient}),
@@ -49,12 +50,13 @@ app.use(session({
 
 
 // Products route
-app.use("/v1/products", productsRoute);
-app.use("/v1/users", usersRoute)
+app.use("/api/v1/products", productsRoute);
+app.use("/api/v1/users", usersRoute)
 
 // Initial route
-app.get('/', (req, res)=>{
-    res.send(`Products service API`);
+app.get('/api', (req, res)=>{
+    res.send(`Microservice API`);
+    console.log('Its working')
 });
 
 
